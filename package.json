@@ -1,0 +1,10 @@
+{
+  "name": "s10d-backends-utils",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "aws-sdk": "^2.206.0",
+    "co": "^4.6.0",
+    "firebase-admin": "^5.9.1"
+  }
+}
