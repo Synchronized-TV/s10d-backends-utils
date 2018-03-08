@@ -4,7 +4,10 @@
   "main": "index.js",
   "peerDependencies": {
     "aws-sdk": "*",
-    "co": "*",
     "firebase-admin": "*"
+  },
+  "dependencies": {
+    "co": "^4.6.0",
+    "s3-public-url": "^1.0.0"
   }
 }

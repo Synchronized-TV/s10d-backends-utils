@@ -1,6 +1,7 @@
 const co = require('co');
 const aws = require('aws-sdk');
 const admin = require('firebase-admin');
+const { getHttps } = require('s3-public-url');
 
 const s3 = new aws.S3();
 
@@ -15,6 +16,15 @@ const getDatabase = co.wrap(function* getDatabase(bucket) {
   return database;
 });
 
+// Return version id of a file from a s3 location.
+const getVersionedUrl = co.wrap(function* getVersionedUrl(Bucket, Key) {
+  const { VersionId } = yield s3.headObject({ Bucket, Key }).promise();
+  const { LocationConstraint: region } = yield s3.getBucketLocation({ Bucket }).promise();
+
+  return `${getHttps(Bucket, Key, region)}?versionid=${VersionId}`;
+});
+
 module.exports = {
-  getDatabase
+  getDatabase,
+  getVersionedUrl
 };
