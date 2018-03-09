@@ -6,8 +6,13 @@
     "aws-sdk": "*",
     "firebase-admin": "*"
   },
+  "devDependencies": {
+    "aws-sdk": "*",
+    "firebase-admin": "*"
+  },
   "dependencies": {
     "co": "^4.6.0",
+    "firestore-backup-restore": "^1.2.2",
     "s3-public-url": "^1.0.0"
   }
 }
