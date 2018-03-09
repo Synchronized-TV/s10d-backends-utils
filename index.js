@@ -39,17 +39,8 @@ const getVersionedUrl = co.wrap(function* getVersionedUrl(Bucket, Key) {
 });
 
 // Create a snapshot for an episode.
-const createEpisodeSnapshot = co.wrap(function* createEpisodeSnapshot(bucket, episodeId) {
+const createEpisodeSnapshot = co.wrap(function* createEpisodeSnapshot(bucket, episodeId, version) {
   const database = yield getDatabase(bucket);
-
-  const querySnapshot = yield database
-    .collection('snapshots')
-    .where('type', '==', 'episode')
-    .orderBy('version', 'desc')
-    .limit(1)
-    .get();
-
-  const version = querySnapshot.empty ? 1 : parseInt(querySnapshot.docs[0].data().version, 10) + 1;
 
   const results = (yield Promise.all([
     backup(yield database.doc(`episodes/${episodeId}`).get()),
