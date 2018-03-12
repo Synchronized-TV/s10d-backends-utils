@@ -20,10 +20,10 @@ const getDatabase = co.wrap(function* getDatabase(bucket) {
 // Get log function.
 function getLog(database) {
   return function log(message, type = 'info') {
-    console[type](message);
+    console[type](message || 'Unknown error');
 
     database.collection('logs').add({
-      message,
+      message: message || 'Unknown error',
       type,
       timestamp: admin.firestore.FieldValue.serverTimestamp()
     });
