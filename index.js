@@ -19,14 +19,31 @@ const getDatabase = co.wrap(function* getDatabase(bucket) {
 
 // Get log function.
 function getLog(database) {
-  return function log(message, type = 'info') {
-    console[type](message || 'Unknown error');
+  function log(message, type = 'info') {
+    console[type](message);
 
     database.collection('logs').add({
-      message: message || 'Unknown error',
+      message,
       type,
       timestamp: admin.firestore.FieldValue.serverTimestamp()
     });
+  }
+
+  function logError(e) {
+    const message = e.message || e.errorMessage || 'Unknown error';
+
+    console.error(message);
+
+    database.collection('logs').add({
+      message,
+      type: 'error',
+      timestamp: admin.firestore.FieldValue.serverTimestamp()
+    });
+  }
+
+  return {
+    log,
+    logError
   };
 }
 
