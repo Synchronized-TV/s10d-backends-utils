@@ -32,7 +32,7 @@ function getLog(database) {
   function logError(e) {
     const message = e.message || e.errorMessage || 'Unknown error';
 
-    console.error(message);
+    console.error(e);
 
     database.collection('logs').add({
       message,
